@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>to my wife</title>
+    <style>
+        body {
+            background-color: #1a1a1a; /* خلفية سوداء ليست داكنة جداً */
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* منع التمرير */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .roses {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        .rose {
+            position: absolute;
+            font-size: 1rem;
+            color: #ff69b4; /* لون وردي للورد */
+            animation: open 3s ease-in-out forwards; /* أنيميشن الفتح */
+            opacity: 1;
+            transition: opacity 1s ease-out;
+        }
+        @keyframes open {
+            0% { transform: scale(0) rotate(0deg); opacity: 0; }
+            50% { transform: scale(1.2) rotate(180deg); opacity: 1; }
+            100% { transform: scale(1) rotate(360deg); opacity: 1; }
+        }
+        #password-section {
+            display: none;
+            text-align: center;
+            z-index: 10;
+            background: linear-gradient(45deg, #ff69b4, #ffb6c1); /* خلفية gradient وردية */
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.5); /* shadow فخم */
+            animation: fadeIn 1s ease-in; /* تأثير fade in */
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        #password-input {
+            padding: 15px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 10px;
+            margin-top: 20px;
+            width: 200px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        #password-input::placeholder {
+            color: #ddd;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 10px;
+            background: #ff1493;
+            color: white;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+        button:hover {
+            background: #ff69b4;
+            transform: scale(1.05);
+        }
+        #message-box {
+            display: none;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px); /* تأثير بلور */
+            border: 1px solid transparent; /* بوردر شفاف */
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 600px;
+            text-align: center;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            z-index: 10;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        #message-text {
+            white-space: pre-wrap; /* للحفاظ على التنسيق */
+        }
+    </style>
+</head>
+<body>
+    <!-- أنيميشن الورد المتفتحة -->
+    <div class="roses" id="roses-container"></div>
+
+    <!-- قسم كلمة المرور -->
+    <div id="password-section">
+        <h2>خمني الباسورد يجوجتي 😍</h2>
+        <input type="password" id="password-input" placeholder="أدخل الباسورد">
+        <button onclick="checkPassword()">دخول</button>
+    </div>
+
+    <!-- صندوق الرسالة -->
+    <div id="message-box">
+        <p id="message-text"></p>
+    </div>
+
+    <script>
+        // إنشاء ورود متفتحة عشوائية
+        function createRoses() {
+            const container = document.getElementById('roses-container');
+            for (let i = 0; i < 20; i++) { // عدد الورد
+                const rose = document.createElement('div');
+                rose.className = 'rose';
+                rose.textContent = '🌹';
+                rose.style.left = Math.random() * 100 + '%';
+                rose.style.top = Math.random() * 100 + '%';
+                rose.style.animationDelay = Math.random() * 2 + 's'; // تأخير عشوائي للفتح
+                container.appendChild(rose);
+            }
+        }
+
+        // إظهار قسم كلمة المرور بعد 5 ثواني وإخفاء الورد
+        setTimeout(() => {
+            const roses = document.querySelectorAll('.rose');
+            roses.forEach(rose => {
+                rose.style.opacity = '0'; // fade out
+            });
+            setTimeout(() => {
+                document.getElementById('roses-container').innerHTML = ''; // إزالة الورد
+                document.getElementById('password-section').style.display = 'block';
+            }, 1000); // بعد fade out
+        }, 5000); // بعد 5 ثواني
+
+        // التحقق من كلمة المرور
+        function checkPassword() {
+            const password = document.getElementById('password-input').value;
+            if (password === 'luxi') {
+                document.getElementById('password-section').style.display = 'none';
+                document.getElementById('message-box').style.display = 'block';
+                typeMessage();
+            } else {
+                alert('الباسورد غلط! جرب تاني 😘');
+            }
+        }
+
+        // طباعة الرسالة حرف بحرف
+        const message = `بصي يحبيبتي بصراحه اول مره اعمل حاجه زي كده حبيت ادمج بين حاجتين بحبهم البرمجه ونتي اينعم ده مثال حقير جدا علي قدراتي بس قولت اجرب بس الاول ولو ظبط المره الجايه اعمل حاجه احلي بكتير ده كلو ف يوم واحد بس ف اتمني تتبسطي بصي بقا يحبيبتي عايز اقولك اني بحبك اوي اوي اوي وخلي الرساله دي معاكي تفكرك كل شويه اني عمري م هزهق منك ولا همل ب الدليل اني عمال اخترع اي حاجه لمجرد اني اشوف ضحكتك حتي وحنا بعيد عن بعض مش عايز ابقا بعيد وتحسي اني جمبك كده عايزك تعرفي اني هصونك ف غيابك زي حضورك واكتر كمان عايزك تعرفي اني مليش غيرك وعايز تعرفي اني مش هكمل حياتي غير بيكي ومعاكي بصراحع مش عارف اتكلم اوي بس هنعتبر المره دي test 
+بعشقككككككك🫂♥️♥️♥️`;
+
+        function typeMessage() {
+            const textElement = document.getElementById('message-text');
+            let index = 0;
+            const interval = setInterval(() => {
+                textElement.textContent += message[index];
+                index++;
+                if (index >= message.length) {
+                    clearInterval(interval);
+                }
+            }, 50); // سرعة الطباعة
+        }
+
+        // بدء الأنيميشن
+        createRoses();
+    </script>
+</body>
+</html>
